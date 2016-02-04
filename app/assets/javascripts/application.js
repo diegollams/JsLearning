@@ -12,5 +12,25 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require turbolinks
+//= require twitter/bootstrap
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
+
+
+$( document ).ready(function() {
+    var a = ['a','b','c'];
+    a.splice(a,1,2);
+    function myFunction() {
+        //document.getElementById("demo").innerHTML =
+        //    "Name is " + navigator.appName +
+        //    "<br>Code name is " + navigator.appCodeName;
+    }
+    //this.getElementById("demo").innerHTML = 'a';
+    myFunction();
+
+});
+
+
+
