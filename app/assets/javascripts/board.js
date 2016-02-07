@@ -7,7 +7,7 @@
         this.game_over = false;
         this.bars = [];
         this.ball = null;
-    }
+    };
     self.Board.prototype = {
         get elements (){
             var elements = this.bars;
@@ -29,7 +29,7 @@
         this.kind = this.constants.SQUARE;
         this.board.bars.push(this);
         this.speed = 10;
-    }
+    };
 
     self.Bar.prototype = {
         down: function(){
@@ -50,7 +50,7 @@
         this.canvas.height = board.height;
         this.board = board;
         this.context = canvas.getContext("2d");
-    }
+    };
     self.BoardView.prototype = {
         draw: function (){
             var elements = this.board.elements;
@@ -59,7 +59,7 @@
             }
 
         }
-    }
+    };
     function draw(context,element){
         if(element === null) return;
         switch(element.kind) {
