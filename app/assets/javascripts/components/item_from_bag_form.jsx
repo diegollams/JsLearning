@@ -1,7 +1,7 @@
 var ItemFromBagForm = React.createClass({
     displayName: 'ItemFromBagForm',
     getInitialState: function(){
-        return {name: '',quantity: 0}
+        return {name: '',weight: 0,benefit: 0}
     },
     render: function(){
         return(
@@ -11,15 +11,19 @@ var ItemFromBagForm = React.createClass({
                     <input onChange={this.handleInputChange} name="name" className="form-control" value={this.state.name} ></input>
                 </div>
                 <div className="form-group">
-                    <label>Cantidad</label>
-                    <input onChange={this.handleInputChange} name="quantity" className="form-control" value={this.state.quantity} type="number"></input>
+                    <label>Weight</label>
+                    <input onChange={this.handleInputChange} name="weight" className="form-control" value={this.state.weight} type="number"></input>
+                </div>
+                <div className="form-group">
+                    <label>benefit</label>
+                    <input onChange={this.handleInputChange} name="benefit" className="form-control" value={this.state.benefit} type="number"></input>
                 </div>
                 <button className="btn btn-primary" onClick={this.handleSubmit} disabled={!this.valid()} >Agregar</button>
             </div>
         );
     },
     valid: function(){
-        return this.state.name && this.state.quantity
+        return this.state.name && this.state.weight && this.state.benefit
     },
     handleInputChange: function(e){
         var data = {};
@@ -28,6 +32,6 @@ var ItemFromBagForm = React.createClass({
     },
     handleSubmit: function(){
         this.props.newItemHandler(this.state);
-        this.setState({name: '',quantity: ''});
+        this.setState({name: '',weight: '',benefit: ''});
     }
 });

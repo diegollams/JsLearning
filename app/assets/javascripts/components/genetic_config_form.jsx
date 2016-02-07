@@ -4,7 +4,7 @@
 var GeneticConfigForm = React.createClass({
     displayName: 'GeneticConfigForm',
     getInitialState: function(){
-        return {generations: '0'}
+        return {generations: '0',bagSize: '0'}
     },
     getDefaultProps: function(){
         return {updateParent: function(){}}
@@ -16,6 +16,8 @@ var GeneticConfigForm = React.createClass({
                     <div className="form-group">
                         <label >Numero de generaciones</label>
                         <input onChange={this.handleInputChange} name="generations" className="form-control" value={this.state.generations}  type="number"></input>
+                        <label >Bag size</label>
+                        <input onChange={this.handleInputChange} name="bagSize" className="form-control" value={this.state.bagSize}  type="number"></input>
                     </div>
                 </div>
             </div>
@@ -23,12 +25,17 @@ var GeneticConfigForm = React.createClass({
     },
     handleInputChange: function(e){
         if(e.target.value < 0){
-            this.setState({generations: '0'});
-            alert("Cant't be negative");
+            var name = e.target.name;
+            this.setState({name: '0'});
+            alert("Can't be negative");
             return;
         }
-        this.setState({generations: parseInt(e.target.value)});
-        this.props.updateParent(e.target.value);
+        var data = {};
+        data[e.target.name] = e.target.value;
+        this.setState(data);
+        this.setState(data);
+        this.props.updateParent(data);
     }
+
 
 });

@@ -21,7 +21,7 @@ var GeneticApp = React.createClass({
                     </div>
                 </div>
                 <h2>Numero de generaciones</h2>
-                <GeneticConfigForm updateParent={this.handleNumberOfGeneration}/>
+                <GeneticConfigForm updateParent={this.configChange}/>
                 <button className="btn btn-primary" onClick={this.newGeneration}>Avanzar una generacion</button>
                 <button className="btn btn-warning">Parar</button>
                 <div className="row">
@@ -33,20 +33,23 @@ var GeneticApp = React.createClass({
         );
     },
     newGeneration: function(){
-        var generation = this.genetic.nextStep();
+        var generation = this.genetic.nextStepRoullet();
         this.setState({newGeneration: generation});
 
     },
-    handleNumberOfGeneration: function(numberGenerations){
-        this.setState({numberGenerations: numberGenerations});
+    configChange: function(data){
+        if(data.bagSize){
+            this.genetic.setBagSize = data.bagSize;
+        }
+        this.setState({data,newGeneration: this.genetic.population});
     },
     valuesDisplay: function(items){
         return (
             <div>
-                <p>{"Numero de cromosomas ("  + items.length + ")"}</p>
+                <p>{"Numero de cromosomas ("  + items.length + ") Tamano de bolsa: " + parseInt(this.genetic.bagSize)}</p>
                 <ul>{
                     items.map(function (individual, index) {
-                        return <li key={index}>{ individual.map(function(item){return item.quantity + '-';})}</li>;
+                        return <li key={index}>{ individual.map(function(item){return 'w: ' + item.weight + ' v: ' + item.benefit + ' | ';}) +'fitness: '+ individual.fitness}</li>;
                     })
                     }
                 </ul>
@@ -62,7 +65,7 @@ var GeneticApp = React.createClass({
                 <ul>
                 {
                     bagItems.map(function(item,index){
-                        return <li key={index}>{ item.name + ': ' + item.quantity}</li>;
+                        return <li key={index}>{ item.name + ': ' + item.weight +' Value: ' +item.benefit}</li>;
                     })
                 }
                 </ul>
@@ -88,20 +91,20 @@ var GeneticApp = React.createClass({
 //        return { label: 'label',updateParent: function(){},type: 'text'}
 //    },
 //    getInitialState: function(){
-//        return {value: this.props.value}
+//        return {value: this.props.benefit}
 //    },
 //    render: function(){
 //        return(
 //            <div className="form-group">
 //                <label >{this.props.label}</label>
-//                <input onChange={this.handleChange.bind(this)} name={this.props.name} className="form-control" value={this.state.value} type={this.props.type}></input>
+//                <input onChange={this.handleChange.bind(this)} name={this.props.name} className="form-control" value={this.state.benefit} type={this.props.type}></input>
 //            </div>
 //        )
 //    },
 //    handleChange: function(e){
 //        var data = {};
-//        data[this.props.name] = e.target.value;
-//        this.setState({value:e.target.value});
+//        data[this.props.name] = e.target.benefit;
+//        this.setState({value:e.target.benefit});
 //        this.props.updateParent(data);
 //    }
 //});
