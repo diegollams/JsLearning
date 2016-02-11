@@ -8,15 +8,15 @@ var ItemFromBagForm = React.createClass({
             <div className="form-inline">
                 <div className="form-group">
                     <label >Nombre</label>
-                    <input onChange={this.handleInputChange} name="name" className="form-control" value={this.state.name} ></input>
+                    <input onChange={this.handleTextInputChange} name="name" className="form-control" value={this.state.name} ></input>
                 </div>
                 <div className="form-group">
                     <label>Weight</label>
-                    <input onChange={this.handleInputChange} name="weight" className="form-control" value={this.state.weight} type="number"></input>
+                    <input onChange={this.handleNumberInputChange} name="weight" className="form-control" value={this.state.weight} type="number"></input>
                 </div>
                 <div className="form-group">
                     <label>benefit</label>
-                    <input onChange={this.handleInputChange} name="benefit" className="form-control" value={this.state.benefit} type="number"></input>
+                    <input onChange={this.handleNumberInputChange} name="benefit" className="form-control" value={this.state.benefit} type="number"></input>
                 </div>
                 <button className="btn btn-primary" onClick={this.handleSubmit} disabled={!this.valid()} >Agregar</button>
             </div>
@@ -25,13 +25,18 @@ var ItemFromBagForm = React.createClass({
     valid: function(){
         return this.state.name && this.state.weight && this.state.benefit
     },
-    handleInputChange: function(e){
+    handleNumberInputChange: function(e){
+        var data = {};
+        data[e.target.name] = parseInt(e.target.value);
+        this.setState(data);
+    },
+    handleTextInputChange: function(e){
         var data = {};
         data[e.target.name] = e.target.value;
         this.setState(data);
     },
     handleSubmit: function(){
         this.props.newItemHandler(this.state);
-        this.setState({name: '',weight: '',benefit: ''});
+        this.setState({name: '',weight: 0,benefit: 0});
     }
 });

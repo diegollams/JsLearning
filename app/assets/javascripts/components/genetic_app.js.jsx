@@ -38,10 +38,11 @@ var GeneticApp = React.createClass({
 
     },
     configChange: function(data){
+        data['newGeneration'] = this.genetic.population;
         if(data.bagSize){
             this.genetic.setBagSize = data.bagSize;
         }
-        this.setState({data,newGeneration: this.genetic.population});
+        this.setState(data);
     },
     valuesDisplay: function(items){
         return (
@@ -74,7 +75,6 @@ var GeneticApp = React.createClass({
     },
 
     addNewBagItem: function(bagItem){
-        bagItem.quantity = parseInt(bagItem.quantity);
         var items = this.state.bagItems.slice();
         items.push(bagItem);
         this.genetic.addItem(bagItem);

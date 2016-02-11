@@ -24,15 +24,15 @@ var GeneticConfigForm = React.createClass({
         )
     },
     handleInputChange: function(e){
+        var data = {};
         if(e.target.value < 0){
-            var name = e.target.name;
-            this.setState({name: '0'});
+            data[e.target.name] = 0;
+            this.setState(data);
             alert("Can't be negative");
+            this.props.updateParent(data);
             return;
         }
-        var data = {};
-        data[e.target.name] = e.target.value;
-        this.setState(data);
+        data[e.target.name] = parseInt(e.target.value);
         this.setState(data);
         this.props.updateParent(data);
     }

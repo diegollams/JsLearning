@@ -81,12 +81,12 @@ function main(){
     boardView.draw();
 }
 //$( document ).ready(main);
-$( document ).keydown(function(event){
-    if(event.keyCode === 38){
-        bar.up();
-    }
-    else if(event.keyCode == 40){
-        bar.down();
-    }
-});
-
+//$( document ).keydown(function(event){
+//    if(event.keyCode === 38){
+//        bar.up();
+//    }
+//    else if(event.keyCode == 40){
+//        bar.down();
+//    }
+//});
+//
