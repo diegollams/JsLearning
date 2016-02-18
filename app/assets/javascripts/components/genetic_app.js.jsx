@@ -7,7 +7,7 @@ var GeneticApp = React.createClass({
     getInitialState: function(){
         this.genetic = new Genetic([],10,10,10);
 
-        return {bagItems: this.props.items,numberGenerations: 0,newGeneration: [],advanceGenerations: 0}
+        return {bagItems: this.props.items,numberGenerations: 10,newGeneration: [],advanceGenerations: 0,individuals: 10}
     },
     render: function() {
 
@@ -20,13 +20,18 @@ var GeneticApp = React.createClass({
                         {this.bagElementsList(this.state.bagItems)}
                     </div>
                 </div>
-                <h2>Numero de generaciones</h2>
+                <h2>Generacion</h2>
                 <GeneticConfigForm updateParent={this.configChange}/>
-                <button className="btn btn-primary" onClick={this.newGeneration}>Avanzar una generacion</button>
+                <button className="btn btn-default" onClick={this.newGeneration}>Avanzar una generacion</button>
+                <button className="btn btn-primary" onClick={this.selfAdvance}>Avanzar solo</button>
                 <button className="btn btn-warning">Parar</button>
                 <div className="row">
-                    <div className="col-md-3">
-                        <p>Numero de generacion: {this.state.advanceGenerations} </p>
+                    <div className="col-md-12">
+                        <p>Numero de generacion: {this.state.numberGenerations} Genraciones que han pasado: {this.state.advanceGenerations} </p>
+                        <div className="progress">
+                            <div className="progress-bar" role="progressbar"  aria-valuemin="0" aria-valuemax="100" style={{ width: ((this.state.advanceGenerations*100)/this.state.numberGenerations) + '%'}}>
+                            </div>
+                        </div>
                         {this.valuesDisplay(this.state.newGeneration)}
                     </div>
                 </div>
@@ -38,17 +43,29 @@ var GeneticApp = React.createClass({
         this.setState({newGeneration: generation,advanceGenerations: this.state.advanceGenerations + 1});
 
     },
+    selfAdvance: function(){
+        var i, initial = this.state.advanceGenerations,final = this.state.numberGenerations;
+        for(i = initial;i < final;i++){
+            console.log(i);
+            this.setState({newGeneration: this.genetic.nextStepRoullet(),advanceGenerations: i + 1});
+        }
+    },
     configChange: function(data){
         data['newGeneration'] = this.genetic.population;
         if(data.bagSize){
             this.genetic.setBagSize = data.bagSize;
         }
+        if(data.individuals){
+            this.genetic.setIndividualNumber = data.individuals;
+            this.setState({newGeneration: this.genetic.population})
+        }
         this.setState(data);
+
     },
     valuesDisplay: function(items){
         return (
             <div>
-                <p>{"Numero de cromosomas ("  + items.length + ") Tamano de bolsa: " + parseInt(this.genetic.bagSize)}</p>
+                <p>{"Numero de indivduos ("  + items.length + ") Tamano de bolsa: " + parseInt(this.genetic.bagSize)}</p>
                 <ul>{
                     items.map(this.createChromosomeString)
                     }
@@ -57,6 +74,7 @@ var GeneticApp = React.createClass({
         )
 
     },
+
     createChromosomeString: function(items,index){
         var i;
         var chromosomes = "";

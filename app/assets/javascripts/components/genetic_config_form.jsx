@@ -4,7 +4,7 @@
 var GeneticConfigForm = React.createClass({
     displayName: 'GeneticConfigForm',
     getInitialState: function(){
-        return {generations: '0',bagSize: '0'}
+        return {numberGenerations: '0',bagSize: '0',individuals: 0}
     },
     getDefaultProps: function(){
         return {updateParent: function(){}}
@@ -14,8 +14,10 @@ var GeneticConfigForm = React.createClass({
             <div>
                 <div className="form-inline">
                     <div className="form-group">
+                        <label >Numero de individuos</label>
+                        <input onChange={this.handleInputChange} name="individuals" className="form-control" value={this.state.individuals}  type="number"></input>
                         <label >Numero de generaciones</label>
-                        <input onChange={this.handleInputChange} name="generations" className="form-control" value={this.state.generations}  type="number"></input>
+                        <input onChange={this.handleInputChange} name="numberGenerations" className="form-control" value={this.state.generations}  type="number"></input>
                         <label >Bag size</label>
                         <input onChange={this.handleInputChange} name="bagSize" className="form-control" value={this.state.bagSize}  type="number"></input>
                     </div>

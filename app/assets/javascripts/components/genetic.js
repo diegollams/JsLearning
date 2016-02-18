@@ -85,7 +85,6 @@
         for( i = 0;i < this.population.length;i++) {
             acummulate += this.population[i].normalizeFitness;
             if(acummulate > random){
-                console.log(this.population[i]);
                 return this.population[i].slice();
             }
         }
