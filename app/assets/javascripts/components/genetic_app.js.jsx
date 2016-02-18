@@ -7,7 +7,7 @@ var GeneticApp = React.createClass({
     getInitialState: function(){
         this.genetic = new Genetic([],10,10,10);
 
-        return {bagItems: this.props.items,numberGenerations: 0,newGeneration: []}
+        return {bagItems: this.props.items,numberGenerations: 0,newGeneration: [],advanceGenerations: 0}
     },
     render: function() {
 
@@ -26,6 +26,7 @@ var GeneticApp = React.createClass({
                 <button className="btn btn-warning">Parar</button>
                 <div className="row">
                     <div className="col-md-3">
+                        <p>Numero de generacion: {this.state.advanceGenerations} </p>
                         {this.valuesDisplay(this.state.newGeneration)}
                     </div>
                 </div>
@@ -34,7 +35,7 @@ var GeneticApp = React.createClass({
     },
     newGeneration: function(){
         var generation = this.genetic.nextStepRoullet();
-        this.setState({newGeneration: generation});
+        this.setState({newGeneration: generation,advanceGenerations: this.state.advanceGenerations + 1});
 
     },
     configChange: function(data){
@@ -49,14 +50,21 @@ var GeneticApp = React.createClass({
             <div>
                 <p>{"Numero de cromosomas ("  + items.length + ") Tamano de bolsa: " + parseInt(this.genetic.bagSize)}</p>
                 <ul>{
-                    items.map(function (individual, index) {
-                        return <li key={index}>{ individual.map(function(item){return 'w: ' + item.weight + ' v: ' + item.benefit + ' | ';}) +'fitness: '+ individual.fitness}</li>;
-                    })
+                    items.map(this.createChromosomeString)
                     }
                 </ul>
             </div>
         )
 
+    },
+    createChromosomeString: function(items,index){
+        var i;
+        var chromosomes = "";
+        for(i = 0;i < items.length;i++){
+            chromosomes += items[i];
+        }
+
+        return <li key={index}>{chromosomes + " | fitness: " + items.fitness}</li>;
     },
     bagElementsList: function(bagItems){
 
@@ -66,7 +74,7 @@ var GeneticApp = React.createClass({
                 <ul>
                 {
                     bagItems.map(function(item,index){
-                        return <li key={index}>{ item.name + ': ' + item.weight +' Value: ' +item.benefit}</li>;
+                        return <li key={index}>{'Id: '+ item.name + ' weigth: ' + item.weight +' Value: ' +item.benefit}</li>;
                     })
                 }
                 </ul>
@@ -78,7 +86,7 @@ var GeneticApp = React.createClass({
         var items = this.state.bagItems.slice();
         items.push(bagItem);
         this.genetic.addItem(bagItem);
-        this.setState({bagItems: items,newGeneration: this.genetic.population})
+        this.setState({bagItems: items,newGeneration: this.genetic.population,advanceGenerations: 0})
     }
 
 });
