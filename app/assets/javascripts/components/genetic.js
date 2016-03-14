@@ -24,6 +24,68 @@
 
     };
 
+    Genetic.prototype.nextStepOneMax = function(sampleNumber){
+        var i,sample = [],x,y,odds = [];
+
+        this.population.sort(function(a,b){return  b.fitness - a.fitness ;});
+        for( i = 0;i < this.population.length;i++){
+            this.population[i].normalizeFitness = this.population[i].fitness / this.population.acumulatedFitness;
+        }
+        for(i = 0;i < this.items.length;i++){
+            odds.push(0);
+        }
+        for(i = 0;i < sampleNumber; i++){
+            sample.push(this.selectFromRoulette());
+        }
+
+        for(x = 0;x < this.items.length; x++){
+            for(y = 0; y < sampleNumber;y++){
+                odds[x] += sample[y][x] == '1' ? 1 : 0;
+            }
+        }
+        console.log(odds);
+        this.generateWithOdds(odds,sampleNumber );
+        return {population: this.population.slice(),odds: odds,best: sample};
+
+    };
+    Genetic.prototype.generateWithOdds = function(odds,sampleNumer){
+        var x,y;
+        this.population = [];
+        for(x = 0 ;x < this.individualNumber;x++){
+            var newIndividual = [];
+            for(y = 0;y < this.items.length;y++){
+                console.log(odds[y] / sampleNumer);
+                if(Math.random() < (odds[y] / sampleNumer)){
+                    newIndividual.push('1');
+                }
+                else{
+                    newIndividual.push('0');
+                }
+            }
+            this.getFitnessSumOneMax(newIndividual);
+            this.population.push(newIndividual);
+        }
+
+    };
+    Genetic.prototype.getFitnessSumOneMax = function(individual){
+        var weightSum = 0,fitness = 0,i;
+        for(i = 0;i < individual.length;i++){
+            if(individual[i] == '1') {
+                //if the bag is max size
+                if (parseInt(this.items[i].weight) + weightSum > this.bagSize) {
+                    individual.weightSum = this.MAX_VALUE;
+                    individual.fitness = 0;
+                    return;
+                }
+                else {
+                    fitness += 1;
+                    weightSum += this.items[i].weight;
+                }
+            }
+        }
+        individual.weightSum = weightSum;
+        individual.fitness = fitness;
+    };
     Genetic.prototype.nextStepRoullet = function(){
         var i,mother,father;
         var newPopulation = [];
@@ -59,6 +121,7 @@
         this.population.acumulatedFitness = acumulatedFitness;
         return this.population.slice();
     };
+
     Genetic.prototype.mutation = function(individual){
         var i;
 

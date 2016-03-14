@@ -2,8 +2,13 @@
 
 Colection of examplames to practices javascript
 
-In /exaples/genetic will find a genetic algorithm implementation for the bag problem
-made with reactjs
+In http://homwork.herokuapp.com/examples/genetic will find a genetic algorithm implementation for the bag problem
+made with reactjs, using roulette selection and sigle crossover
+Find in app/assets/components/genetic,js.jsx
+
+
+In http://homwork.herokuapp.com/examples/onemax will find a genetic algorithm implementation for the bag problem
+made with reactjs, using onemax selection for the algorithm
 Find in app/assets/components/genetic,js.jsx
 
 In / will find a pong implementation with camvas

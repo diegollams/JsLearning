@@ -4,4 +4,8 @@ class ExamplesController < ApplicationController
 
   def genetic
   end
+
+  def onemax
+  end
+
 end

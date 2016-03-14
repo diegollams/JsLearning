@@ -24,7 +24,6 @@ var GeneticApp = React.createClass({
                 <GeneticConfigForm updateParent={this.configChange}/>
                 <button className="btn btn-default" onClick={this.newGeneration}>Avanzar una generacion</button>
                 <button className="btn btn-primary" onClick={this.selfAdvance}>Avanzar solo</button>
-                <button className="btn btn-warning">Parar</button>
                 <div className="row">
                     <div className="col-md-12">
                         <p>Numero de generacion: {this.state.numberGenerations} Genraciones que han pasado: {this.state.advanceGenerations} </p>
@@ -74,7 +73,6 @@ var GeneticApp = React.createClass({
         )
 
     },
-
     createChromosomeString: function(items,index){
         var i;
         var chromosomes = "";
