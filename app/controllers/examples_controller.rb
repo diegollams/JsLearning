@@ -8,4 +8,6 @@ class ExamplesController < ApplicationController
   def onemax
   end
 
+  def parallel
+  end
 end

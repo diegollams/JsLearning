@@ -15,13 +15,14 @@
         set setBagSize(bagSize){
             this.bagSize = parseInt(bagSize);
             this.regeneratePopulation();
+        },
+        set setPopulation(population){
+            this.population = population;
         }
-
     };
     Genetic.prototype.addItem = function(item){
         this.items.push(item);
         this.regeneratePopulation();
-
     };
 
     Genetic.prototype.nextStepOneMax = function(sampleNumber){
@@ -43,18 +44,22 @@
                 odds[x] += sample[y][x] == '1' ? 1 : 0;
             }
         }
-        console.log(odds);
+        // console.log(odds);
         this.generateWithOdds(odds,sampleNumber );
         return {population: this.population.slice(),odds: odds,best: sample};
 
     };
+    Genetic.prototype.nextStepOneMaxParallel = function () {
+        
+    };
+    
     Genetic.prototype.generateWithOdds = function(odds,sampleNumer){
         var x,y;
         this.population = [];
         for(x = 0 ;x < this.individualNumber;x++){
             var newIndividual = [];
             for(y = 0;y < this.items.length;y++){
-                console.log(odds[y] / sampleNumer);
+                // console.log(odds[y] / sampleleNumer);
                 if(Math.random() < (odds[y] / sampleNumer)){
                     newIndividual.push('1');
                 }

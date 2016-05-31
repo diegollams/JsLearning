@@ -13,6 +13,7 @@ var GeneticApp = React.createClass({
 
         return (
             <div>
+                <d1>Genetico</d1>
                 <h2>Agrega elementos que se pueden agregara la mochila</h2>
                 <div className="row"><ItemFromBagForm newItemHandler={this.addNewBagItem}/></div>
                 <div className="row">

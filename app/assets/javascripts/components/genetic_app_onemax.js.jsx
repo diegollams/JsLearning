@@ -2,15 +2,16 @@ var GeneticAppOneMax = React.createClass({
     displayName: 'GeneticAppOneMax',
     getDefaultProps: function(){
         return {items: []}
+
     },
     getInitialState: function(){
         this.genetic = new Genetic([],10,25);
-
         return {bagItems: this.props.items,numberGenerations: 10,newGeneration: [],advanceGenerations: 0,individuals: 25,eliteGeneration: []}
     },
     render:  function() {
         return (
             <div>
+                <h1>EDA</h1>
                 <h2>Agrega elementos que se pueden agregara la mochila</h2>
                 <div className="row"><ItemFromBagForm newItemHandler={this.addNewBagItem}/></div>
                 <div className="row">
@@ -41,8 +42,8 @@ var GeneticAppOneMax = React.createClass({
     },
     newGeneration: function(){
         var value = this.genetic.nextStepOneMax(10);
-
         this.setState({newGeneration: value.population,eliteGeneration: value.best,advanceGenerations: this.state.advanceGenerations + 1});
+
 
     },
     createChromosomeString: function(items,index){
